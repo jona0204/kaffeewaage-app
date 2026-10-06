@@ -1,0 +1,8 @@
+{
+  "version": "1.1.8",
+  "size": 1088016,
+  "sha256": "c050dbf238ed1edec9c936a699d67bd05c9044e04fa8c3ff3ce805cdda18b0da",
+  "sig": "MEUCIFqQ7kmY4rHcsEQhcJ+rMiyaf6Puskx+aFKpMae6y9boAiEA0a+rcK2OU5NhtmfSkM/yM3E4fyKdHa3Zqq2+ZBtVqM8=",
+  "url": "https://jona0204.github.io/kaffeewaage-app/firmware/kw-1.1.8.bin",
+  "notes": "Test-Update: gleiche Funktion wie 1.1.7, nur neue Versionsnummer"
+}
