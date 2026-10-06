@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#7b5733">
+<title>Kaffeewaage</title>
+<style>
+:root{
+  --bg:#fbf6f2; --card:#f3e7de; --card2:#ffdcc0; --ink:#211a15; --mute:#6b5a4e; --line:#e3d2c5;
+  --pri:#7b5733; --onpri:#fff; --ok:#2e7d32; --warn:#b26a00; --err:#ba1a1a; --chip:#eadbd0;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#1a1410; --card:#271f19; --card2:#4a3320; --ink:#f0e6de; --mute:#bba99a; --line:#3a2e25;
+         --pri:#e3b98f; --onpri:#2b1a0b; --ok:#7ed98a; --warn:#ffb74d; --err:#ff8a80; --chip:#33281f; }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+main{max-width:480px;margin:0 auto;padding:max(12px,env(safe-area-inset-top)) 16px 32px}
+header{display:flex;align-items:center;gap:10px;margin:4px 0 14px}
+header h1{font-size:22px;font-weight:600;margin:0;flex:1}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--err);display:inline-block}
+.dot.on{background:var(--ok)}
+button{font:inherit;border:0;border-radius:22px;padding:11px 18px;font-weight:600;cursor:pointer}
+.bp{background:var(--pri);color:var(--onpri)}
+.bo{background:transparent;color:var(--pri);border:1.5px solid var(--pri)}
+.bt{background:transparent;color:var(--pri);padding:8px 10px}
+button:disabled{opacity:.4}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px}
+.hero{background:var(--card2);text-align:center;padding:18px 16px 16px}
+.big{font-size:60px;line-height:1.05;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.mode{font-size:17px;font-weight:600;margin-top:4px}
+.sub{font-size:14px;color:var(--mute);margin-top:2px}
+.chips{display:flex;gap:8px;justify-content:center;margin-bottom:8px;flex-wrap:wrap}
+.chip{background:var(--chip);border-radius:12px;padding:4px 10px;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+h2{font-size:16px;margin:0 0 10px;font-weight:600}
+.row{display:flex;align-items:center;gap:10px}
+.step{width:46px;height:46px;border-radius:23px;background:var(--chip);color:var(--ink);font-size:24px;padding:0}
+.val{flex:1;text-align:center;font-size:30px;font-variant-numeric:tabular-nums}
+.val small{font-size:15px;color:var(--mute)}
+input[type=range]{width:100%;margin:14px 0 2px;accent-color:var(--pri)}
+.line{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.line:first-of-type{border-top:0}
+.line .tx{flex:1}.line .t1{font-size:15px}.line .t2{font-size:13px;color:var(--mute)}
+.sw{position:relative;width:52px;height:30px;flex:none}
+.sw input{opacity:0;width:0;height:0}
+.sw span{position:absolute;inset:0;border-radius:15px;background:var(--line);transition:.15s}
+.sw span:before{content:"";position:absolute;width:24px;height:24px;left:3px;top:3px;border-radius:12px;background:#fff;transition:.15s}
+.sw input:checked+span{background:var(--pri)}
+.sw input:checked+span:before{transform:translateX(22px)}
+#log{font:12px ui-monospace,Menlo,monospace;color:var(--mute);max-height:150px;overflow:auto;white-space:pre-wrap;margin:0}
+.hint{font-size:14px;line-height:1.45}
+.hint li{margin:4px 0}
+.warn{background:var(--card2);border-radius:12px;padding:12px;font-size:14px;line-height:1.45;margin-bottom:12px}
+.hide{display:none}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;transition:.2s;pointer-events:none;max-width:90vw}
+.toast.show{opacity:.95}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Kaffeewaage</h1>
+    <span class="dot" id="connDot"></span>
+    <button class="bp" id="btnConn">Verbinden</button>
+  </header>
+
+  <div class="warn hide" id="noBt">
+    <b>Bluetooth im Browser nicht verfügbar.</b><br>
+    iPhone: Seite in der App <b>„Bluefy – Web BLE Browser“</b> öffnen (Safari kann kein Web-Bluetooth).<br>
+    Android/Mac/PC: <b>Chrome</b> oder <b>Edge</b> verwenden. Die Seite muss über <b>https</b> geladen sein.
+  </div>
+
+  <section class="card hero">
+    <div class="chips">
+      <span class="chip"><span class="dot" id="scDot"></span><span id="scTxt">Waage –</span></span>
+      <span class="chip" id="fwChip">Firmware –</span>
+    </div>
+    <div class="big" id="w">–,– g</div>
+    <div class="mode" id="mode">nicht verbunden</div>
+    <div class="sub" id="stop">&nbsp;</div>
+  </section>
+
+  <section class="card">
+    <h2>Zielgewicht</h2>
+    <div class="line">
+      <div class="tx"><div class="t1">Aus dem Pulvergewicht der Waage</div><div class="t2" id="pwTxt">Themis Ultra ab Firmware 4.0</div></div>
+      <label class="sw"><input type="checkbox" id="powder"><span></span></label>
+    </div>
+    <div id="fixedBox">
+      <div class="row">
+        <button class="step" id="tMinus">−</button>
+        <div class="val"><span id="tVal">36,0</span> <small>g</small></div>
+        <button class="step" id="tPlus">+</button>
+      </div>
+      <input type="range" id="tRange" min="5" max="99" step="0.5" value="36">
+    </div>
+    <div id="ratioBox" class="hide">
+      <div class="row">
+        <button class="step" id="rMinus">−</button>
+        <div class="val">1 : <span id="rVal">2,00</span></div>
+        <button class="step" id="rPlus">+</button>
+      </div>
+      <div class="sub" style="text-align:center" id="ratioRes">&nbsp;</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Nachlauf-Ausgleich</h2>
+    <div class="sub" style="margin:0 0 6px">Nach dem Stopp tropft noch Kaffee nach. Die Platine lernt diese Menge und stoppt entsprechend früher.</div>
+    <div class="line">
+      <div class="tx"><div class="t1" id="offTxt">– g</div><div class="t2" id="offN">&nbsp;</div></div>
+      <button class="bt" id="offReset">Zurücksetzen</button>
+    </div>
+    <div class="line">
+      <div class="tx t1">Automatisch lernen</div>
+      <label class="sw"><input type="checkbox" id="learn"><span></span></label>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Test</h2>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <button class="bo" id="btnTare">Waage tarieren (Piep)</button>
+      <button class="bo" id="btnRescan">Waage neu koppeln</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>So geht’s</h2>
+    <ul class="hint" style="padding-left:18px;margin:0">
+      <li>Brühtaster <b>kurz</b> drücken: normaler Bezug, die Waage wiegt nur.</li>
+      <li>Brühtaster <b>halten bis die Waage piept</b>, dann loslassen: Brew-by-Weight stoppt am Zielgewicht.</li>
+      <li>Die Bookoo-App muss geschlossen sein.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Protokoll</h2>
+    <pre id="log"></pre>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const SVC  = '6b1d0001-6a3e-4f2c-9c43-5b2a8d7e9c01';
+const STAT = '6b1d0002-6a3e-4f2c-9c43-5b2a8d7e9c01';
+const CMD  = '6b1d0003-6a3e-4f2c-9c43-5b2a8d7e9c01';
+const RESP = '6b1d0004-6a3e-4f2c-9c43-5b2a8d7e9c01';
+const MODES = ['Bereit', 'Bezug – nur wiegen', 'Bezug – Brew-by-Weight', 'Nachlauf'];
+
+const $ = id => document.getElementById(id);
+const fmt = (v, d = 1) => Number(v).toFixed(d).replace('.', ',');
+let dev = null, chCmd = null, wantConnected = false, busy = Promise.resolve();
+let st = null;                     // letzter Status
+let editT = null, editR = null;    // lokale Eingabe, bis die Platine bestätigt
+let tTimer = null, rTimer = null, lockUntil = 0;
+
+function log(s) {
+  const t = new Date().toLocaleTimeString('de-DE');
+  const el = $('log');
+  el.textContent = `${t}  ${s}\n` + el.textContent.slice(0, 4000);
+}
+function toast(s) {
+  const el = $('toast'); el.textContent = s; el.classList.add('show');
+  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+if (!navigator.bluetooth) { $('noBt').classList.remove('hide'); $('btnConn').disabled = true; }
+
+async function send(cmd) {
+  if (!chCmd) { toast('Nicht verbunden'); return; }
+  const data = new TextEncoder().encode(cmd);
+  busy = busy.then(async () => {
+    try {
+      if (chCmd.writeValueWithResponse) await chCmd.writeValueWithResponse(data);
+      else await chCmd.writeValue(data);
+      log('→ ' + cmd);
+    } catch (e) { log('Fehler beim Senden: ' + e.message); }
+  });
+  return busy;
+}
+
+async function connect() {
+  try {
+    if (!dev) {
+      dev = await navigator.bluetooth.requestDevice({
+        filters: [{ services: [SVC] }, { namePrefix: 'Kaffeewaage' }],
+        optionalServices: [SVC]
+      });
+      dev.addEventListener('gattserverdisconnected', onDisc);
+    }
+    wantConnected = true;
+    $('btnConn').textContent = 'Verbinde …'; $('btnConn').disabled = true;
+    const gatt = await dev.gatt.connect();
+    const svc = await gatt.getPrimaryService(SVC);
+    chCmd = await svc.getCharacteristic(CMD);
+    const chStat = await svc.getCharacteristic(STAT);
+    const chResp = await svc.getCharacteristic(RESP);
+    chResp.addEventListener('characteristicvaluechanged', e => {
+      const s = new TextDecoder().decode(e.target.value);
+      log('← ' + s);
+      if (s.startsWith('err')) toast(s);
+    });
+    await chResp.startNotifications();
+    chStat.addEventListener('characteristicvaluechanged', e => {
+      try { onStatus(JSON.parse(new TextDecoder().decode(e.target.value))); } catch (_) {}
+    });
+    await chStat.startNotifications();
+    try { onStatus(JSON.parse(new TextDecoder().decode(await chStat.readValue()))); } catch (_) {}
+    log('Verbunden mit ' + (dev.name || 'Kaffeewaage'));
+    setConn(true);
+  } catch (e) {
+    log('Verbindung fehlgeschlagen: ' + e.message);
+    setConn(false);
+    if (e.name === 'NotFoundError') { dev = null; wantConnected = false; }
+  }
+}
+function disconnect() {
+  wantConnected = false;
+  if (dev && dev.gatt.connected) dev.gatt.disconnect();
+  setConn(false);
+}
+function onDisc() {
+  chCmd = null; setConn(false); log('Verbindung getrennt');
+  if (wantConnected) setTimeout(() => { if (wantConnected) connect(); }, 1500);
+}
+function setConn(on) {
+  $('connDot').classList.toggle('on', on);
+  $('btnConn').disabled = false;
+  $('btnConn').textContent = on ? 'Trennen' : 'Verbinden';
+  if (!on) { $('mode').textContent = 'nicht verbunden'; }
+}
+$('btnConn').onclick = () => (chCmd ? disconnect() : connect());
+
+function onStatus(s) {
+  st = s;
+  $('w').textContent = s.sc ? fmt(s.w) + ' g' : '–,– g';
+  $('mode').textContent = MODES[s.m] ?? '?';
+  $('scDot').classList.toggle('on', !!s.sc);
+  $('scTxt').textContent = s.sc ? 'Waage verbunden' : 'Waage nicht verbunden';
+  $('fwChip').textContent = 'Firmware ' + s.fw;
+  $('stop').textContent = `Ziel ${fmt(s.at)} g · Stopp bei ${fmt(s.st)} g`;
+  $('offTxt').textContent = fmt(s.o, 2) + ' g';
+  $('offN').textContent = `aus ${s.n} von 5 Bezügen`;
+  $('learn').checked = !!s.l;
+  $('powder').checked = !!s.p;
+  $('fixedBox').classList.toggle('hide', !!s.p);
+  $('ratioBox').classList.toggle('hide', !s.p);
+  $('pwTxt').textContent = s.p ? (s.pw > 0 ? `Pulver ${fmt(s.pw)} g von der Waage` : 'Kein Pulvergewicht von der Waage') : 'Themis Ultra ab Firmware 4.0';
+  if (Date.now() > lockUntil) {
+    editT = null; editR = null;
+    showT(s.t); showR(s.r);
+  }
+  $('ratioRes').textContent = s.p && s.pw > 0 ? `${fmt(s.pw)} g × ${fmt(editR ?? s.r, 2)} = ${fmt(s.pw * (editR ?? s.r))} g` : ' ';
+}
+
+function showT(v) { $('tVal').textContent = fmt(v); $('tRange').value = v; }
+function showR(v) { $('rVal').textContent = fmt(v, 2); }
+function setT(v) {
+  v = Math.round(Math.min(99, Math.max(5, v)) * 2) / 2;
+  editT = v; showT(v); lockUntil = Date.now() + 2500;
+  clearTimeout(tTimer); tTimer = setTimeout(() => send('ziel ' + v.toFixed(1)), 500);
+}
+function setR(v) {
+  v = Math.round(Math.min(5, Math.max(1, v)) * 20) / 20;
+  editR = v; showR(v); lockUntil = Date.now() + 2500;
+  clearTimeout(rTimer); rTimer = setTimeout(() => send('verhaeltnis ' + v.toFixed(2)), 500);
+}
+const curT = () => editT ?? (st ? st.t : 36);
+const curR = () => editR ?? (st ? st.r : 2);
+$('tMinus').onclick = () => setT(curT() - 0.5);
+$('tPlus').onclick  = () => setT(curT() + 0.5);
+$('tRange').oninput = e => setT(parseFloat(e.target.value));
+$('rMinus').onclick = () => setR(curR() - 0.05);
+$('rPlus').onclick  = () => setR(curR() + 0.05);
+$('powder').onchange = e => send(e.target.checked ? 'pulver an' : 'pulver aus');
+$('learn').onchange  = e => send(e.target.checked ? 'lernen an' : 'lernen aus');
+$('offReset').onclick = () => { if (confirm('Gelernten Nachlauf löschen?')) send('offset reset'); };
+$('btnTare').onclick  = () => send('test tara');
+$('btnRescan').onclick = () => { if (confirm('Kopplung zur Waage löschen und neu suchen?')) send('waage neu'); };
+</script>
+</body>
+</html>
