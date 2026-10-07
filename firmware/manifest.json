@@ -1,8 +1,0 @@
-{
-  "version": "1.2.1",
-  "size": 1094080,
-  "sha256": "7b1e7b40e88f787a3649e605ef8db612fe9c8898eebc98d7f8d2af7dcb996cd1",
-  "sig": "MEUCIQDMO+MP6uSG7TuG3s9WOVG3V7As4zGWMfLlU5nSYn6exwIgBnW2Mae6Vn182NcyyOQEDM1379l9ZQWCgnGqUwL0QHU=",
-  "url": "kw-1.2.1.bin",
-  "notes": "Test-Update: gleiche Funktion wie 1.2.0, nur neue Versionsnummer"
-}
