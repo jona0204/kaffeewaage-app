@@ -1,8 +1,0 @@
-{
-  "version": "1.4.0",
-  "size": 1094592,
-  "sha256": "8593a8800a9e988e774d941511751196b0c858834eca72acc2d611798273890c",
-  "sig": "MEUCIQDdvj5oSz7oFavQ4ar2iamT2/qqHFRvJk11wWHnlzaFjAIgUt81YvUi6xoI2PSxTHT4qtfw5uSU5k573F1MPlB+uuo=",
-  "url": "kw-1.4.0.bin",
-  "notes": "Pulver-Modus entfernt, Zielgewicht nur noch fest je Profil"
-}
