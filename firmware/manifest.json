@@ -1,8 +1,8 @@
 {
-  "version": "1.6.4",
-  "size": 1099088,
-  "sha256": "c6cdcb50f7c26a606e7face9be185b7778ecbd26b9f054e6eb53203d91eb6f22",
-  "sig": "MEQCIACg9il5u4zLSpMheeQHvdO+bPXmuTRuz4wqmGLJiXQTAiAzVd3UyyHv8dzFqiwsMpWFAufo5Cy2XFB9BO/yi6qsHw==",
-  "url": "kw-1.6.4.bin",
-  "notes": "Stopp auch bei langsamem Bezugsbeginn; Waage darf kurz beruehrt werden"
+  "version": "1.7.0",
+  "size": 1101600,
+  "sha256": "3fa5b998b05cf9bf64f1ec46578c19143682dde994c67a26b683590aa40b6343",
+  "sig": "MEUCIC1ch+/EFu4BHf685MJD7L2pPcpSbXjipgvpEUma2mvAAiEAhaxnfUn1KGo/OyuuQGdN5gIwJYPsTycFXF7oyu6cmoE=",
+  "url": "kw-1.7.0.bin",
+  "notes": "Stopp aus dem Durchfluss, Kopplungs-PIN 123, Bezuege einzeln loeschen"
 }
