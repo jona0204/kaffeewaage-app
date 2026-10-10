@@ -1,8 +1,8 @@
 {
-  "version": "1.6.2",
-  "size": 1098160,
-  "sha256": "73dbf6a6c74601a843b51cbea400202b2c3dd6bbc493176d7515cec002485ce7",
-  "sig": "MEQCIDewsIF+pxSDf6qmpfBEXLprwDvE4rcMMtWiuXBeOgCeAiBi7pUZHXz1BHr8Ntxzd70QLAKpuFCfVHIkVlMzX1EVwg==",
-  "url": "kw-1.6.2.bin",
-  "notes": "Timer ab Loslassen des Tasters, Nachlauf auch bei langem Nachtropfen"
+  "version": "1.6.4",
+  "size": 1099088,
+  "sha256": "c6cdcb50f7c26a606e7face9be185b7778ecbd26b9f054e6eb53203d91eb6f22",
+  "sig": "MEQCIACg9il5u4zLSpMheeQHvdO+bPXmuTRuz4wqmGLJiXQTAiAzVd3UyyHv8dzFqiwsMpWFAufo5Cy2XFB9BO/yi6qsHw==",
+  "url": "kw-1.6.4.bin",
+  "notes": "Stopp auch bei langsamem Bezugsbeginn; Waage darf kurz beruehrt werden"
 }
