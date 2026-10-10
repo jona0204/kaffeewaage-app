@@ -1,8 +1,8 @@
 {
-  "version": "1.6.0",
-  "size": 1097504,
-  "sha256": "45c475897703209be37591eb05801af5f28698189d1aafe6cded68f2e882e4c1",
-  "sig": "MEQCIHGz10+SW8FDaiPYxNiGjW/A9NyVu0Y+ZkqrisYaklvAAiBEpzLsKKKnZkn6IYjuzcymD1iZxfBwa0bOrXL3fi0hxA==",
-  "url": "kw-1.6.0.bin",
-  "notes": "Shot Dog: Brew-by-Weight-Schalter und Bezugstimer"
+  "version": "1.6.2",
+  "size": 1098160,
+  "sha256": "73dbf6a6c74601a843b51cbea400202b2c3dd6bbc493176d7515cec002485ce7",
+  "sig": "MEQCIDewsIF+pxSDf6qmpfBEXLprwDvE4rcMMtWiuXBeOgCeAiBi7pUZHXz1BHr8Ntxzd70QLAKpuFCfVHIkVlMzX1EVwg==",
+  "url": "kw-1.6.2.bin",
+  "notes": "Timer ab Loslassen des Tasters, Nachlauf auch bei langem Nachtropfen"
 }
