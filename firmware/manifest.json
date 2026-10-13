@@ -1,8 +1,8 @@
 {
-  "version": "1.7.0",
-  "size": 1101600,
-  "sha256": "3fa5b998b05cf9bf64f1ec46578c19143682dde994c67a26b683590aa40b6343",
-  "sig": "MEUCIC1ch+/EFu4BHf685MJD7L2pPcpSbXjipgvpEUma2mvAAiEAhaxnfUn1KGo/OyuuQGdN5gIwJYPsTycFXF7oyu6cmoE=",
-  "url": "kw-1.7.0.bin",
-  "notes": "Stopp aus dem Durchfluss, Kopplungs-PIN 123, Bezuege einzeln loeschen"
+  "version": "1.7.1",
+  "size": 1101584,
+  "sha256": "1d445200a6cd88bc7ca76f67b718c88fba5eeee733fa9e8ae464a9bb1c635ce5",
+  "sig": "MEUCIQDXA7ZeVaDZD8rqeb8zEfS3q34mLSKT4mKogYl6BuZL9QIgbbiokhWQkAMVVmqq0l2c4UVeY7yDuCk3d1IB3pVfetw=",
+  "url": "kw-1.7.1.bin",
+  "notes": "Bezuege nur nach langem Tastendruck speichern"
 }
