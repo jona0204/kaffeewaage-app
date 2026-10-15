@@ -522,16 +522,18 @@ function render() {
   $('hint').textContent = hint;
   const p = Math.max(0, Math.min(1, t > 0 ? w / t : 0));
   setScene(scene, scene === 'stop' ? 1 : (scene === 'sleep' ? Math.min(p, 0.15) * 0 : p), p);
-  const showLive = on && live.pts.length > 1 && (s.m !== 0 || !!result);
+  const showLive = on && live.lp && live.pts.length > 1 && (s.m !== 0 || !!result);
   $('liveCard').classList.toggle('hide', !showLive);
   if (showLive) drawLive(t);
   keepAwake(on && (awakeAll || s.m !== 0 || !!result));
 }
 
 // ================= Live-Kurve =================
-const live = { pts: [], t0: 0, stopT: null };
+const live = { pts: [], t0: 0, stopT: null, lp: false };
 function liveStatus(s, pm) {
-  if (s.m !== 0 && pm === 0) { live.pts = []; live.t0 = 0; live.stopT = null; }   // neuer Bezug
+  if (s.m !== 0 && pm === 0) { live.pts = []; live.t0 = 0; live.stopT = null; live.lp = false; }   // neuer Bezug
+  // nur lang gedrueckte Bezuege: Firmware ab 1.7.2 meldet "lp", aeltere erkennt man am Brew-by-Weight-Modus
+  if (s.m !== 0 && (s.lp === 1 || s.m === 2)) live.lp = true;
   const now = Date.now();
   if (!live.t0) {
     if (s.m === 0 || (s.bt != null && s.bt === 0)) return;     // Taster noch gedrueckt: Pumpe aus

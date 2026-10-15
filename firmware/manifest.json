@@ -1,8 +1,8 @@
 {
-  "version": "1.7.1",
-  "size": 1101584,
-  "sha256": "1d445200a6cd88bc7ca76f67b718c88fba5eeee733fa9e8ae464a9bb1c635ce5",
-  "sig": "MEUCIQDXA7ZeVaDZD8rqeb8zEfS3q34mLSKT4mKogYl6BuZL9QIgbbiokhWQkAMVVmqq0l2c4UVeY7yDuCk3d1IB3pVfetw=",
-  "url": "kw-1.7.1.bin",
-  "notes": "Bezuege nur nach langem Tastendruck speichern"
+  "version": "1.7.2",
+  "size": 1101664,
+  "sha256": "c2c9eec5ddeb5371fcf848d5e4d48fd7fd915d73a554adac08bb40a7fad379bd",
+  "sig": "MEUCIQCGe/sYM1wN6CSzzLgflF4qoySOC+CHI9Vdblo7uzynhgIgQkCrvIOCNg7IoIUF6W8MaxZiihxhLkFWRng6jDuVScE=",
+  "url": "kw-1.7.2.bin",
+  "notes": "Live-Kurve nur bei langem Tastendruck"
 }
