@@ -1,8 +1,8 @@
 {
-  "version": "1.7.3",
-  "size": 1101824,
-  "sha256": "0805f1a6ea5b8d7b96f9113ad7597350d8f606eaf6862c18fd467bd4249eb450",
-  "sig": "MEUCIQDWg8UbF1btBVnHZDT0l3Mi5NA03mkRBqVl32H0crMshAIgWiGnalxn4NLhi6wp0B1N5HBTEEVRvprOvnitP8lbZT0=",
-  "url": "kw-1.7.3.bin",
-  "notes": "Akkuanzeige der Waage in der App"
+  "version": "1.7.4",
+  "size": 1102672,
+  "sha256": "a7b5aadb5b74532a3e05bae924ff2984165d21bd36d2d1b641e69711e1b29d72",
+  "sig": "MEYCIQDurcE/UCmGojIOVTcpOvLL8MIT/5LnqW2R5zferCDv6gIhALHtIZXN3RoAE5g2tp/AhJtr8WdcGoPk44A3oFOATyr4",
+  "url": "kw-1.7.4.bin",
+  "notes": "Empfangsstaerke (RSSI) von Waage und Handy fuer die Antennen-Ausrichtung"
 }
