@@ -1,8 +1,8 @@
 {
-  "version": "1.7.2",
-  "size": 1101664,
-  "sha256": "c2c9eec5ddeb5371fcf848d5e4d48fd7fd915d73a554adac08bb40a7fad379bd",
-  "sig": "MEUCIQCGe/sYM1wN6CSzzLgflF4qoySOC+CHI9Vdblo7uzynhgIgQkCrvIOCNg7IoIUF6W8MaxZiihxhLkFWRng6jDuVScE=",
-  "url": "kw-1.7.2.bin",
-  "notes": "Live-Kurve nur bei langem Tastendruck"
+  "version": "1.7.3",
+  "size": 1101824,
+  "sha256": "0805f1a6ea5b8d7b96f9113ad7597350d8f606eaf6862c18fd467bd4249eb450",
+  "sig": "MEUCIQDWg8UbF1btBVnHZDT0l3Mi5NA03mkRBqVl32H0crMshAIgWiGnalxn4NLhi6wp0B1N5HBTEEVRvprOvnitP8lbZT0=",
+  "url": "kw-1.7.3.bin",
+  "notes": "Akkuanzeige der Waage in der App"
 }
